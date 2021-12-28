@@ -1,5 +1,5 @@
 # Discord bot - Get your daily random words definition
-Receive everyday a random word's definition!
+Receive everyday a random French word's definition!
 
 ## Install & Run your local version
 ```
