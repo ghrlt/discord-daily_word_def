@@ -11,6 +11,8 @@ import api
 
 load_dotenv()
 
+REQUEST_PER_USER = {}
+
 bot = commands.Bot(command_prefix="!", description="Receive a random word definition in your DM, everyday!")
 api = api.Api(api_key=getenv('dicolink_apikey'))
 
