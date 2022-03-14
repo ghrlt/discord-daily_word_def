@@ -26,6 +26,8 @@ async def on_message(msg):
 	if msg.author.bot: return
 	if msg.guild: return
 
+	msg.content = msg.content.lower()
+
 
 	if msg.content in ["subscribe", "sub", "register", "start"]:
 		#register msg.author
