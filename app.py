@@ -70,6 +70,9 @@ async def on_message(msg):
 
 		word = api.get_random_word()
 		wdef = api.get_word_definition(word)
+		while not wdef:
+			word = api.get_random_word()
+			wdef = api.get_word_definition(word)
 
 		REQUEST_PER_USER[msg.author.id] += 1
 
@@ -104,6 +107,9 @@ async def send_word_def():
 
 	word = api.get_random_word()
 	wdef = api.get_word_definition(word)
+	while not wdef:
+		word = api.get_random_word()
+		wdef = api.get_word_definition(word)
 
 	for sub in subs:
 		u = await bot.fetch_user(sub)

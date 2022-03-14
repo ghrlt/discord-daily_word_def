@@ -1,6 +1,5 @@
 import requests as req
 
-
 class Api:
 	def __init__(self, api_key: str):
 		self.api_key = api_key
@@ -32,6 +31,10 @@ class Api:
 
 			}
 		)
+		# sometimes, the api don't know the word................
+		if isinstance(r, dict) and r['error']:
+			print(word, "-", r)
+			return False
 
 		word_def = ""
 		for _word_def in r:
@@ -46,3 +49,5 @@ class Api:
 
 		r = self.s.get(full_path, params=params).json()
 		return r
+
+
