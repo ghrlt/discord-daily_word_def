@@ -33,7 +33,7 @@ class Api:
 		)
 		# sometimes, the api don't know the word................
 		if isinstance(r, dict) and r['error']:
-			print(word, "-", r)
+			print(word, "-", str(r).encode('utf-8'))
 			return False
 
 		word_def = ""
