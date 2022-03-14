@@ -61,18 +61,19 @@ async def on_message(msg):
 
 
 	elif msg.content in ["new", "new word", "new definition", "new def", "another"]:
+		if not msg.author.id in REQUEST_PER_USER:
+			REQUEST_PER_USER[msg.author.id] = 0
+
 		if REQUEST_PER_USER[msg.author.id] >= 5:
 			await msg.reply("> ❌ Unable to send another definition today.. Support the developer to allow more word def per day!")
 			return
 
-		word = api.get_random_word().title()
+		word = api.get_random_word()
 		wdef = api.get_word_definition(word)
 
-		if not msg.author.id in REQUEST_PER_USER:
-			REQUEST_PER_USER[msg.author.id] = 0
 		REQUEST_PER_USER[msg.author.id] += 1
 
-		await msg.reply(f"{word}:\n{wdef}")
+		await msg.reply(f"{word.title()}:\n{wdef}")
 
 	else:
 		await msg.add_reaction("❔")
@@ -106,7 +107,7 @@ async def send_word_def():
 
 	for sub in subs:
 		u = await bot.fetch_user(sub)
-		await u.send(f"{word}:\n{wdef}")
+		await u.send(f"{word.title()}:\n{wdef}")
 
 
 
