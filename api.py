@@ -18,7 +18,7 @@ class Api:
 				"maxlong": -1,
 				"verbeconjugue": "false"
 			}
-		)
+		)[0]
 
 		word = r['mot']
 		return word
@@ -33,7 +33,10 @@ class Api:
 			}
 		)
 
-		word_def = r['definition']
+		word_def = ""
+		for _word_def in r:
+			word_def += f"\n\t- {_word_def['definition']}"
+
 		return word_def
 
 

@@ -1,5 +1,5 @@
-import nextcord as discord
-from nextcord.ext import commands, tasks
+import discord
+from discord.ext import commands, tasks
 
 import json
 
@@ -41,7 +41,6 @@ async def on_message(msg):
 
 		await msg.reply("> ✅ You successfully subscribed!")
 
-
 	elif msg.content in ["unsubscribe", "unsub", "signout", "stop"]:
 		#cancel msg.author
 		with open('subscribers.list', 'r') as f:
@@ -59,12 +58,28 @@ async def on_message(msg):
 		await msg.reply("> ✅ You successfully unsubscribed!")
 
 
+	elif msg.content in ["new", "new word", "new definition", "new def", "another"]:
+		if REQUEST_PER_USER[msg.author.id] >= 5:
+			await msg.reply("> ❌ Unable to send another definition today.. Support the developer to allow more word def per day!")
+			return
+
+		word = api.get_random_word().title()
+		wdef = api.get_word_definition(word)
+
+		if not msg.author.id in REQUEST_PER_USER:
+			REQUEST_PER_USER[msg.author.id] = 0
+		REQUEST_PER_USER[msg.author.id] += 1
+
+		await msg.reply(f"{word}:\n{wdef}")
+
 	else:
 		await msg.add_reaction("❔")
 
 
 @bot.event
 async def on_raw_reaction_add(payload):
+	if payload.user_id == bot.user.id: return
+
 	# Send help msg
 	if payload.guild_id: return
 
